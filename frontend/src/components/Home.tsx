@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import Nav from "./Nav";
+import HeroSection from "./HeroSection";
 
 const Home = () => {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <h1 className="text-4xl font-bold">Welcome to the Home Page</h1>
+    <div className="flex flex-col items-center justify-center max-w-[1440px]">
+      <Nav />
+      <HeroSection />
     </div>
   );
 };

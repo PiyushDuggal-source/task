@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { Formik, Field, Form, FormikHelpers, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import registerImg from "../assets/images/registerPng.png";
 import * as Yup from "yup";
-import axiosClient from "../api/axiosClient";
 import FormikField from "./common/Field";
 import FormikErrorMessage from "./common/ErrorField";
 import PrimaryButton from "./common/PrimaryButton";

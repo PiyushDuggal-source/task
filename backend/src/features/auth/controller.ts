@@ -3,6 +3,11 @@ import bcrypt from 'bcrypt';
 import { z } from 'zod';
 import User, { IUser } from '../../models/user.model';
 import { UserSchema, UserLoginSchema } from '../../models/validators/user';
+import UserSettings, {
+  IUserSettings,
+  IUserSettingsProps,
+  Product,
+} from '~/models/userSettings.model';
 
 declare global {
   namespace Express {
@@ -38,8 +43,83 @@ export const registerUser = async (req: Request, res: Response) => {
       password: hashedPassword,
     });
 
-    // Save the user to the database
+    const dummyProducts: Product[] = [
+      {
+        name: 'Shiny Dress',
+        category: 'Dress',
+        image: 'https://picsum.photos/300/200',
+      },
+
+      {
+        name: 'Long Dress',
+        category: 'Dress',
+        image: 'https://picsum.photos/300/200',
+      },
+
+      {
+        name: 'Full Sweater',
+        category: 'Sweater',
+        image: 'https://picsum.photos/300/200',
+      },
+      {
+        name: 'Half Sweater',
+        category: 'Sweater',
+        image: 'https://picsum.photos/300/200',
+      },
+      {
+        name: 'Red Shirt',
+        category: 'Shirt',
+        image: 'https://picsum.photos/300/200',
+      },
+      {
+        name: 'Blue Shirt',
+        category: 'Shirt',
+        image: 'https://picsum.photos/300/200',
+      },
+      {
+        name: 'Green Shirt',
+        category: 'Shirt',
+        image: 'https://picsum.photos/300/200',
+      },
+    ];
+
+    const profileSettings: IUserSettingsProps = {
+      heroSection: {
+        image1: 'heroImage1',
+        image2: 'heroImage2',
+        image3: 'heroImage3',
+        image4: 'heroImage4',
+        heading1: 'ULTIMATE',
+        heading2: 'SALE',
+        description: 'NEW COLLECTION',
+      },
+      sponsors: {
+        images: ['sponsor1', 'sponsor2', 'sponsor3', 'sponsor4', 'sponsor5'],
+      },
+      productPage: {
+        heading: 'New Arivals',
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem. Scelerisque duis ultrices sollicitudin',
+        products: [...dummyProducts],
+      },
+      section2: {
+        image: 'https://picsum.photos/550/400',
+        description:
+          'lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem. Scelerisque duis ultrices sollicitudin',
+        heading: 'Peaky Blinders',
+        subheading: 'New Collection',
+        price: '100',
+      },
+    };
+
+    const userSettings = new UserSettings({
+      user: newUser._id,
+      ...profileSettings,
+    });
+
+    // Save the user and settings
     await newUser.save();
+    await userSettings.save();
 
     // Set user session
     req.session.userId = (newUser._id as string).toString();

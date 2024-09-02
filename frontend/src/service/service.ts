@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import axiosClient from "../api/axiosClient";
+import { IUserSettingsProps } from "../types/types";
 
 type RegisterValues = {
   firstName: string;
@@ -81,4 +82,15 @@ export const logoutUser = async (): Promise<{ loggedOut: boolean }> => {
     console.error("Error:", error);
   }
   return { loggedOut: false };
+};
+
+export const getUserSettings = async (): Promise<IUserSettingsProps | null> => {
+  try {
+    const response = await axiosClient.get("/users/settings");
+    console.log("User settings:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user settings:", error);
+  }
+  return null;
 };
