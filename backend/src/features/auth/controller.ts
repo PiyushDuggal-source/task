@@ -1,26 +1,31 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import { z } from 'zod';
-import User from '../../models/user.model';
+import User, { IUser } from '../../models/user.model';
 import { UserSchema, UserLoginSchema } from '../../models/validators/user';
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: IUser;
+    }
+  }
+}
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
     // Validate the request body against our schema
     const validatedData = UserSchema.parse(req.body);
 
-    // Check if user already exists
+    // Check if user already exists using email
     const existingUser = await User.findOne({
-      $or: [
-        { email: validatedData.email },
-        { username: validatedData.username },
-      ],
+      email: validatedData.email,
     });
 
     if (existingUser) {
       return res
         .status(400)
-        .json({ message: 'User with this email or username already exists' });
+        .json({ message: 'User with this email already exists' });
     }
 
     // Hash the password
@@ -36,15 +41,13 @@ export const registerUser = async (req: Request, res: Response) => {
     // Save the user to the database
     await newUser.save();
 
+    // Set user session
+    req.session.userId = (newUser._id as string).toString();
+
     // Send a success response
     res.status(201).json({
-      message: 'User registered successfully',
-      user: {
-        id: newUser._id,
-        username: newUser.username,
-        email: newUser.email,
-        role: newUser.role,
-      },
+      registered: true,
+      user: newUser,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -85,13 +88,8 @@ export const loginUser = async (req: Request, res: Response) => {
 
     // Send success response
     res.json({
-      message: 'Logged in successfully',
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-      },
+      loggedIn: true,
+      user: user,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -105,4 +103,33 @@ export const loginUser = async (req: Request, res: Response) => {
       res.status(500).json({ message: 'An unexpected error occurred' });
     }
   }
+};
+
+export const isAuth = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.session && req.session.userId) {
+    try {
+      const user = await User.findById(req.session.userId);
+      if (user) {
+        req.user = user;
+        return next();
+      }
+    } catch (error) {
+      return res.status(500).json({ message: 'An unexpected error occurred' });
+    }
+  }
+  res.status(401).json({ message: 'Unauthorized' });
+};
+
+export const logoutUser = async (req: Request, res: Response) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'An unexpected error occurred' });
+    }
+    res.clearCookie('qid');
+    res.json({ loggedOut: true });
+  });
 };

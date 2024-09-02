@@ -2,7 +2,8 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 // Define the interface for User document
 export interface IUser extends Document {
-  username: string;
+  firstname: string;
+  lastname: string;
   password: string;
   email: string;
   role: 'user' | 'admin';
@@ -10,7 +11,12 @@ export interface IUser extends Document {
 // Create the User schema
 const UserSchema: Schema = new Schema(
   {
-    username: {
+    lastName: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    firstName: {
       type: String,
       required: true,
       unique: true,
@@ -23,6 +29,10 @@ const UserSchema: Schema = new Schema(
       type: String,
       required: true,
       unique: true,
+    },
+    phone: {
+      type: String,
+      required: true,
     },
     role: {
       type: String,

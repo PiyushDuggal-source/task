@@ -4,4 +4,4 @@ import { pingServerRouter, authRouter } from '~/features';
 export const router = express.Router();
 
 router.use('/ping', pingServerRouter);
-router.use('/', authRouter);
+router.use('/auth', authRouter);
