@@ -85,16 +85,22 @@ export const registerUser = async (req: Request, res: Response) => {
 
     const profileSettings: IUserSettingsProps = {
       heroSection: {
-        image1: 'heroImage1',
-        image2: 'heroImage2',
-        image3: 'heroImage3',
-        image4: 'heroImage4',
+        image1: 'https://picsum.photos/300/500',
+        image2: 'https://picsum.photos/300/500',
+        image3: 'https://picsum.photos/200/100',
+        image4: 'https://picsum.photos/200/100',
         heading1: 'ULTIMATE',
         heading2: 'SALE',
         description: 'NEW COLLECTION',
       },
       sponsors: {
-        images: ['sponsor1', 'sponsor2', 'sponsor3', 'sponsor4', 'sponsor5'],
+        images: [
+          'https://picsum.photos/150/50',
+          'https://picsum.photos/150/50',
+          'https://picsum.photos/150/50',
+          'https://picsum.photos/150/50',
+          'https://picsum.photos/150/50',
+        ],
       },
       productPage: {
         heading: 'New Arivals',

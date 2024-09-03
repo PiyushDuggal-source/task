@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import axiosClient from "../api/axiosClient";
 import { IUserSettingsProps } from "../types/types";
+import { updateSetAccessor } from "typescript";
 
 type RegisterValues = {
   firstName: string;
@@ -91,6 +92,19 @@ export const getUserSettings = async (): Promise<IUserSettingsProps | null> => {
     return response.data;
   } catch (error) {
     console.error("Error fetching user settings:", error);
+  }
+  return null;
+};
+
+export const updateUserSettings = async (
+  updatedSettings: IUserSettingsProps
+) => {
+  try {
+    const response = await axiosClient.put("/users/settings", updatedSettings);
+    console.log("Updated user settings:", response.data);
+    return response;
+  } catch (error) {
+    console.error("Error updating user settings:", error);
   }
   return null;
 };

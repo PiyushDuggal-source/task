@@ -1,5 +1,6 @@
 // Hero Section Interface
-interface HeroSection {
+export interface HeroSection {
+  [key: string]: string;
   image1: string;
   image2: string;
   image3: string;
