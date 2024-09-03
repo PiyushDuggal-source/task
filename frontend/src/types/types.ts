@@ -17,6 +17,7 @@ interface Sponsors {
 
 // Product Interface
 export interface Product {
+  _id: string;
   name: string;
   image: string;
   category: string;
@@ -43,4 +44,13 @@ export interface IUserSettingsProps {
   sponsors: Sponsors;
   productPage: ProductPage;
   section2: Section2;
+  testimonials: ITestimonial[];
+}
+
+export interface ITestimonial {
+  _id: string;
+  name: string;
+  role: string;
+  message: string;
+  image: string;
 }

@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
 import axiosClient from "../api/axiosClient";
 import { IUserSettingsProps } from "../types/types";
-import { updateSetAccessor } from "typescript";
 
 type RegisterValues = {
   firstName: string;

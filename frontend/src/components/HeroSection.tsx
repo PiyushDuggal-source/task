@@ -128,7 +128,7 @@ const HeroSection = () => {
             {userSettings?.heroSection.heading2}
           </h1>
           <p>{userSettings?.heroSection.description}</p>
-          <PrimaryButton className="mt-4 w-[150px]">SHOP NOW</PrimaryButton>
+          <PrimaryButton className="mt-4 w-[140px]">SHOP NOW</PrimaryButton>
 
           <div className="absolute hidden gap-1 mb-[280px] sm:flex -right-0">
             <div className="p-1 bg-white rounded-full cursor-pointer">

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import UserSettings from '~/models/userSettings.model';
+import { UserSettings } from '~/models/userSettings.model';
 
 export const getUserSettings = async (req: Request, res: Response) => {
   try {

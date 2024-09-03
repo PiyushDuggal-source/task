@@ -3,10 +3,11 @@ import bcrypt from 'bcrypt';
 import { z } from 'zod';
 import User, { IUser } from '../../models/user.model';
 import { UserSchema, UserLoginSchema } from '../../models/validators/user';
-import UserSettings, {
-  IUserSettings,
+import {
+  ITestimonial,
   IUserSettingsProps,
   Product,
+  UserSettings,
 } from '~/models/userSettings.model';
 
 declare global {
@@ -43,40 +44,78 @@ export const registerUser = async (req: Request, res: Response) => {
       password: hashedPassword,
     });
 
+    const dummyTestimonials: ITestimonial[] = [
+      {
+        name: 'John Doe',
+        role: 'CEO',
+        message:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem. Scelerisque duis ultrices sollicitudin',
+        image: 'https://picsum.photos/300/200',
+      },
+      {
+        name: 'Jane Doe',
+        role: 'CTO',
+        message:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem. Scelerisque duis ultrices sollicitudin',
+        image: 'https://picsum.photos/300/200',
+      },
+      {
+        name: 'John Doe',
+        role: 'CEO',
+        message:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem. Scelerisque duis ultrices sollicitudin',
+        image: 'https://picsum.photos/300/200',
+      },
+      {
+        name: 'Jane Doe',
+        role: 'CTO',
+        message:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem. Scelerisque duis ultrices sollicitudin',
+        image: 'https://picsum.photos/300/200',
+      },
+    ];
+
     const dummyProducts: Product[] = [
       {
+        id: '1',
         name: 'Shiny Dress',
         category: 'Dress',
         image: 'https://picsum.photos/300/200',
       },
 
       {
+        id: '2',
         name: 'Long Dress',
         category: 'Dress',
         image: 'https://picsum.photos/300/200',
       },
 
       {
+        id: '3',
         name: 'Full Sweater',
         category: 'Sweater',
         image: 'https://picsum.photos/300/200',
       },
       {
+        id: '4',
         name: 'Half Sweater',
         category: 'Sweater',
         image: 'https://picsum.photos/300/200',
       },
       {
+        id: '5',
         name: 'Red Shirt',
         category: 'Shirt',
         image: 'https://picsum.photos/300/200',
       },
       {
+        id: '6',
         name: 'Blue Shirt',
         category: 'Shirt',
         image: 'https://picsum.photos/300/200',
       },
       {
+        id: '7',
         name: 'Green Shirt',
         category: 'Shirt',
         image: 'https://picsum.photos/300/200',
@@ -116,6 +155,7 @@ export const registerUser = async (req: Request, res: Response) => {
         subheading: 'New Collection',
         price: '100',
       },
+      testimonials: [...dummyTestimonials],
     };
 
     const userSettings = new UserSettings({

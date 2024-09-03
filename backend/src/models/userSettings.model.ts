@@ -1,5 +1,12 @@
 import mongoose, { Document, Schema, Types } from 'mongoose';
 
+export interface ITestimonial {
+  name: string;
+  role: string;
+  message: string;
+  image: string;
+}
+
 // Hero Section Interface
 interface HeroSection {
   image1: string;
@@ -18,6 +25,7 @@ interface Sponsors {
 
 // Product Interface
 export interface Product {
+  id: string;
   name: string;
   image: string;
   category: string;
@@ -44,6 +52,7 @@ export interface IUserSettingsProps {
   sponsors: Sponsors;
   productPage: ProductPage;
   section2: Section2;
+  testimonials: ITestimonial[];
 }
 
 // User Settings Interface
@@ -53,6 +62,7 @@ export interface IUserSettings extends Document {
   sponsors: Sponsors;
   productPage: ProductPage;
   section2: Section2;
+  testimonials: ITestimonial[];
 }
 
 // Hero Section Schema
@@ -64,6 +74,13 @@ const heroSectionSchema = new Schema<HeroSection>({
   heading1: { type: String, required: true },
   heading2: { type: String, required: true },
   description: { type: String, required: true },
+});
+
+const TestimonialSchema: Schema = new Schema({
+  name: { type: String, required: true },
+  role: { type: String, required: true },
+  message: { type: String, required: true },
+  image: { type: String, required: true },
 });
 
 // Sponsors Schema
@@ -101,6 +118,7 @@ const userSettingsSchema = new Schema<IUserSettings>({
   sponsors: { type: sponsorsSchema, required: true },
   productPage: { type: productPageSchema, required: true },
   section2: { type: section2Schema, required: true },
+  testimonials: { type: [TestimonialSchema], required: true },
 });
 
 // Create the model
@@ -109,4 +127,11 @@ const UserSettings = mongoose.model<IUserSettings>(
   userSettingsSchema
 );
 
-export default UserSettings;
+const ProductSchema = mongoose.model<Product>('Products', productSchema);
+
+const Testimonial = mongoose.model<ITestimonial>(
+  'Testimonial',
+  TestimonialSchema
+);
+
+export { UserSettings, ProductSchema, Testimonial };
