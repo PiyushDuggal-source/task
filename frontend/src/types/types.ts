@@ -11,27 +11,26 @@ export interface HeroSection {
 }
 
 // Sponsors Interface
-interface Sponsors {
+export interface Sponsors {
   images: string[];
 }
 
 // Product Interface
 export interface Product {
-  _id: string;
   name: string;
   image: string;
   category: string;
 }
 
 // Product Page Interface
-interface ProductPage {
+export interface ProductPage {
   heading: string;
   description: string;
   products: Product[];
 }
 
 // Section2 Interface
-interface Section2 {
+export interface Section2 {
   image: string;
   description: string;
   heading: string;

@@ -9,12 +9,14 @@ import { FaRegEdit } from "react-icons/fa";
 import { updateUserSettings } from "../service/service";
 import { toast } from "react-toastify";
 import PrimaryButton from "./common/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
-  const [loading, setLoading] = React.useState(true);
   const [user, setUser] = React.useState<UserOrNull>(null);
   const [userSettings, setUserSettings] =
     React.useState<IUserSettingsProps | null>(null);
+
+  const navigate = useNavigate();
 
   const authContext = React.useContext(AuthContext);
 
@@ -28,13 +30,12 @@ const HeroSection = () => {
 
       setUser(user);
       setUserSettings(userSettings);
-      setLoading(false);
     }
   }, [user, authContext]);
 
   const deleteImage = async (image: keyof HeroSectionType) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this image?"
+      "Are you sure you want to delete this image?",
     );
 
     if (!confirmDelete) {
@@ -62,6 +63,7 @@ const HeroSection = () => {
         }
 
         setUserSettings(updatedUserSettings);
+        authContext?.setProfileSettings(updatedUserSettings);
         toast.success("Image deleted successfully");
       } catch (error) {
         console.error("Error deleting image:", error);
@@ -86,17 +88,23 @@ const HeroSection = () => {
             />
           )}
 
-        <div className="absolute hidden gap-1 mt-4 sm:flex right-4">
-          <div className="p-1 bg-white rounded-full cursor-pointer">
-            <FaRegEdit />
-          </div>
-          <div
-            onClick={() => deleteImage("image1")}
-            className="p-1 bg-white rounded-full cursor-pointer"
-          >
-            <FaRegTrashCan />
-          </div>
-        </div>
+        {userSettings?.heroSection.image1 &&
+          userSettings?.heroSection.image1.length > 0 && (
+            <div className="absolute hidden gap-1 mt-4 sm:flex right-4">
+              <div
+                onClick={() => navigate("/editor")}
+                className="p-1 bg-white rounded-full cursor-pointer"
+              >
+                <FaRegEdit />
+              </div>
+              <div
+                onClick={() => deleteImage("image1")}
+                className="p-1 bg-white rounded-full cursor-pointer"
+              >
+                <FaRegTrashCan />
+              </div>
+            </div>
+          )}
       </div>
       <div className="flex flex-col items-center sm:w-[33%]">
         <div className="relative h-[20%]">
@@ -108,17 +116,23 @@ const HeroSection = () => {
                 alt="login"
               />
             )}
-          <div className="absolute hidden gap-1 -mt-24 sm:flex left-60">
-            <div className="p-1 bg-white rounded-full cursor-pointer">
-              <FaRegEdit />
-            </div>
-            <div
-              onClick={() => deleteImage("image3")}
-              className="p-1 bg-white rounded-full cursor-pointer"
-            >
-              <FaRegTrashCan />
-            </div>
-          </div>
+          {userSettings?.heroSection.image3 &&
+            userSettings?.heroSection.image3.length > 0 && (
+              <div className="absolute hidden gap-1 -mt-24 sm:flex left-60">
+                <div
+                  onClick={() => navigate("/editor")}
+                  className="p-1 bg-white rounded-full cursor-pointer"
+                >
+                  <FaRegEdit />
+                </div>
+                <div
+                  onClick={() => deleteImage("image3")}
+                  className="p-1 bg-white rounded-full cursor-pointer"
+                >
+                  <FaRegTrashCan />
+                </div>
+              </div>
+            )}
         </div>
         <div className="flex relative flex-col justify-center items-center h-[60%] text-[#484848]">
           <h1 className="text-6xl font-medium text-center">
@@ -128,10 +142,15 @@ const HeroSection = () => {
             {userSettings?.heroSection.heading2}
           </h1>
           <p>{userSettings?.heroSection.description}</p>
-          <PrimaryButton className="mt-4 w-[140px]">SHOP NOW</PrimaryButton>
+          <PrimaryButton className="mt-4 w-[140px!important]">
+            SHOP NOW
+          </PrimaryButton>
 
           <div className="absolute hidden gap-1 mb-[280px] sm:flex -right-0">
-            <div className="p-1 bg-white rounded-full cursor-pointer">
+            <div
+              onClick={() => navigate("/editor")}
+              className="p-1 bg-white rounded-full cursor-pointer"
+            >
               <FaRegEdit />
             </div>
           </div>
@@ -145,17 +164,23 @@ const HeroSection = () => {
                 alt="login"
               />
             )}
-          <div className="absolute hidden gap-1 -mt-24 sm:flex left-60">
-            <div className="p-1 bg-white rounded-full cursor-pointer">
-              <FaRegEdit />
-            </div>
-            <div
-              onClick={() => deleteImage("image4")}
-              className="p-1 bg-white rounded-full cursor-pointer"
-            >
-              <FaRegTrashCan />
-            </div>
-          </div>
+          {userSettings?.heroSection.image4 &&
+            userSettings?.heroSection.image4.length > 0 && (
+              <div className="absolute hidden gap-1 -mt-24 sm:flex left-60">
+                <div
+                  onClick={() => navigate("/editor")}
+                  className="p-1 bg-white rounded-full cursor-pointer"
+                >
+                  <FaRegEdit />
+                </div>
+                <div
+                  onClick={() => deleteImage("image4")}
+                  className="p-1 bg-white rounded-full cursor-pointer"
+                >
+                  <FaRegTrashCan />
+                </div>
+              </div>
+            )}
         </div>
       </div>
       <div className="hidden sm:flex relative justify-start w-[33%]">
@@ -167,17 +192,23 @@ const HeroSection = () => {
               alt="login"
             />
           )}
-        <div className="absolute hidden gap-1 mt-4 sm:flex right-44">
-          <div className="p-1 bg-white rounded-full cursor-pointer">
-            <FaRegEdit />
-          </div>
-          <div
-            onClick={() => deleteImage("image2")}
-            className="p-1 bg-white rounded-full cursor-pointer"
-          >
-            <FaRegTrashCan />
-          </div>
-        </div>
+        {userSettings?.heroSection.image2 &&
+          userSettings?.heroSection.image2.length > 0 && (
+            <div className="absolute hidden gap-1 mt-4 sm:flex right-36">
+              <div
+                onClick={() => navigate("/editor")}
+                className="p-1 bg-white rounded-full cursor-pointer"
+              >
+                <FaRegEdit />
+              </div>
+              <div
+                onClick={() => deleteImage("image2")}
+                className="p-1 bg-white rounded-full cursor-pointer"
+              >
+                <FaRegTrashCan />
+              </div>
+            </div>
+          )}
       </div>
     </div>
   );

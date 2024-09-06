@@ -14,12 +14,10 @@ const UserSchema: Schema = new Schema(
     lastName: {
       type: String,
       required: true,
-      unique: true,
     },
     firstName: {
       type: String,
       required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -33,6 +31,7 @@ const UserSchema: Schema = new Schema(
     phone: {
       type: String,
       required: true,
+      unique: true,
     },
     role: {
       type: String,

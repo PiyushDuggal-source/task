@@ -49,7 +49,7 @@ const Login = () => {
         authContext?.setIsAuthenticated(true);
         authContext?.setUser(response.user);
         toast.success("Login successful");
-        return navigate("/");
+        return window.location.href = "/";
       }
       console.log("Login successful:", response);
     } catch (error) {
@@ -58,11 +58,11 @@ const Login = () => {
   };
 
   return (
-    <div className="flex w-full sm:flex-row">
+    <div className="flex w-full mt-10 sm:mt-0 sm:flex-row justify-center">
       <div className="hidden sm:flex sm:w-[50%] mx-auto">
         <img className="object-contain h-screen" src={loginImg} alt="login" />
       </div>
-      <div className="sm:w-[50%] my-auto px-20">
+      <div className="sm:w-[50%] my-auto px-5 sm:px-20">
         <h3 className="mb-20 text-6xl volkhov-regular text-[#484848]">FASCO</h3>
 
         <h3 className="mb-6 text-3xl volkhov-regular">Create account</h3>

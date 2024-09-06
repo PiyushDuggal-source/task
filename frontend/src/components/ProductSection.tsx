@@ -7,12 +7,15 @@ import PrimaryButton from "./common/PrimaryButton";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { updateUserSettings } from "../service/service";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ProductSection = () => {
   const [userSettings, setUserSettings] =
     React.useState<IUserSettingsProps | null>(null);
 
   const [userProducts, setUserProducts] = React.useState<Product[]>([]);
+
+  const navigate = useNavigate();
 
   const authContext = React.useContext(AuthContext);
   useEffect(() => {
@@ -29,16 +32,14 @@ const ProductSection = () => {
     }
   }, [authContext]);
 
-  const deleteProduct = async (productId: string) => {
-    console.log("productId:", productId);
+  const deleteProduct = async (index: number) => {
     if (userSettings) {
       const confirmDelete = window.confirm(
-        "Are you sure you want to delete this product?"
+        "Are you sure you want to delete this product?",
       );
       if (confirmDelete) {
-        const updatedProducts = userSettings.productPage.products.filter(
-          (product) => product._id !== productId
-        );
+        const updatedProducts = [...userProducts];
+        updatedProducts.splice(index, 1);
 
         const updatedUserSettings = {
           ...userSettings,
@@ -59,8 +60,9 @@ const ProductSection = () => {
           }
 
           setUserSettings(updatedUserSettings);
+          authContext?.setProfileSettings(updatedUserSettings);
           setUserProducts(updatedProducts);
-          toast.success("Image deleted successfully");
+          toast.success("Product deleted successfully");
         } catch (error) {
           console.error("Error deleting image:", error);
           toast.error("Error deleting image");
@@ -81,14 +83,16 @@ const ProductSection = () => {
           </p>
         </div>
         <div className="absolute right-0 z-10 hidden gap-1 -mt-24 sm:flex">
-          <PrimaryButton>Add product</PrimaryButton>
+          <PrimaryButton onClick={() => navigate("/editor")}>
+            Add product
+          </PrimaryButton>
         </div>
       </div>
 
       <div className="container grid items-center justify-center gap-4 py-8 sm:grid-cols-3">
         {userProducts.map((product, index) => (
           <div
-            key={product._id}
+            key={index}
             className="w-[300px] relative p-4 product-shadow rounded-lg poppins-regular"
           >
             <img
@@ -118,12 +122,15 @@ const ProductSection = () => {
             </div>
 
             <div className="absolute z-10 hidden gap-1 top-6 right-6 sm:flex">
-              <div className="p-1 bg-white rounded-full cursor-pointer">
+              <div
+                onClick={() => navigate("/editor")}
+                className="p-1 bg-white rounded-full cursor-pointer"
+              >
                 <FaRegEdit />
               </div>
 
               <div
-                onClick={() => deleteProduct(product._id)}
+                onClick={() => deleteProduct(index)}
                 className="p-1 bg-white rounded-full cursor-pointer"
               >
                 <FaRegTrashCan />

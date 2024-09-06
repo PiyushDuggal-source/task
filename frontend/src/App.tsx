@@ -9,6 +9,9 @@ import Logout from "./components/Logout";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Editor from "./components/Editor";
+
+// FRONTEND
 
 function App() {
   useEffect(() => {
@@ -19,6 +22,7 @@ function App() {
     <AuthProvider>
       <Routes>
         <Route path="/" element={<ProtectedRoute component={<Home />} />} />
+        <Route path="/editor" element={<Editor />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />

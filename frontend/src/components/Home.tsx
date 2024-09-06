@@ -6,6 +6,7 @@ import ProductSection from "./ProductSection";
 import FeatureImgSection from "./FeatureImgSection";
 import Features from "./Features";
 import Testimonials from "./Testimonials";
+import Footer from "./Footer";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <FeatureImgSection />
       <Features />
       <Testimonials />
+      <Footer />
     </div>
   );
 };

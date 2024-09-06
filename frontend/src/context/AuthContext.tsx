@@ -16,6 +16,9 @@ interface AuthContextType {
   userSettings: IUserSettingsProps | null;
   setUser: React.Dispatch<React.SetStateAction<UserOrNull>>;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  setProfileSettings: React.Dispatch<
+    React.SetStateAction<IUserSettingsProps | null>
+  >;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -57,6 +60,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setUser,
         setIsAuthenticated,
         userSettings: profileSettings,
+        setProfileSettings,
       }}
     >
       {children}

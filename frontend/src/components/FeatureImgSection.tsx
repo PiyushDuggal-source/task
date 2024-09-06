@@ -31,7 +31,7 @@ const FeatureImgSection = () => {
           alt="feature"
         />
       </div>
-      <div className="flex flex-col sm:w-[50%] h-full p-12 bg-[#FFF7DC]">
+      <div className="flex relative flex-col sm:w-[50%] h-full p-12 bg-[#FFF7DC]">
         <h5 className="text-xl poppins-regular text-[#767676]">
           {userSettings?.section2.subheading}
         </h5>
@@ -44,7 +44,7 @@ const FeatureImgSection = () => {
           {userSettings?.section2.description}
         </p>
         <p className="text-xl font-bold">$ {userSettings?.section2.price}.00</p>
-        <PrimaryButton className="mt-4 w-[140px]">Buy Now</PrimaryButton>
+        <PrimaryButton className="mt-4 w-[150px!important]">Buy Now</PrimaryButton>
 
         <div className="absolute z-10 hidden gap-1 cursor-pointer right-10 sm:flex">
           <div className="p-1 bg-white rounded-full cursor-pointer">

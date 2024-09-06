@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
 import { IUserSettingsProps } from "../types/types";
-import { AuthContext, UserOrNull } from "../context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import { FaRegEdit } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Sponsor = () => {
   const [userSettings, setUserSettings] =
     React.useState<IUserSettingsProps | null>(null);
+
+  const navigate = useNavigate();
 
   const authContext = React.useContext(AuthContext);
 
@@ -42,6 +45,10 @@ const Sponsor = () => {
           },
         }}
         loop
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
         modules={[Autoplay]}
         className="mySwiper"
       >
@@ -55,7 +62,7 @@ const Sponsor = () => {
       </Swiper>
 
       <div className="absolute z-10 hidden gap-1 sm:flex right-12">
-        <div className="p-1 bg-white rounded-full cursor-pointer">
+        <div onClick={() => navigate("/editor")} className="p-1 bg-white rounded-full cursor-pointer">
           <FaRegEdit />
         </div>
       </div>
